@@ -8,8 +8,13 @@ import useAuth from "../../CustomHooks/useAuth";
 
 const Navbar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
-  const { user } = useAuth();
+  const { user, logoutUser } = useAuth();
   // const handleMenuOpen =
+  const handleLogout = () => {
+    logoutUser().then((res) => {
+      console.log(res);
+    });
+  };
   return (
     <div className="h-16 max-w-[100%] py-4 shadow-sm z-10 opacity-70  ">
       <Container>
@@ -54,7 +59,7 @@ const Navbar = () => {
                 <li className="list-none">
                   <Link to={"/register"}>Sign Up</Link>
                 </li>
-                <li className="list-none">
+                <li onClick={handleLogout} className="list-none">
                   <Link to={""}>Log Out</Link>
                 </li>
               </div>

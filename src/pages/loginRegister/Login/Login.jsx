@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../../CustomHooks/useAuth";
 import { useForm } from "react-hook-form";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const Login = () => {
-  const { loginUser, googleLogin } = useAuth({});
+  const { loading, setLoading, loginUser, googleLogin } = useAuth();
+  const navigation = useNavigate();
+  console.log(loading);
   const {
     register,
     formState: { errors },
@@ -20,9 +23,20 @@ const Login = () => {
 
   // google login
   const handleGoogleLogin = () => {
-    googleLogin().then((res) => {
-      console.log(res.data);
-    });
+    googleLogin()
+      .then((res) => {
+        console.log(res.user);
+        if (res.user) {
+          //send user to home page
+          navigation("/");
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+        if (err) {
+          setLoading(false);
+        }
+      });
   };
 
   return (
@@ -82,7 +96,11 @@ const Login = () => {
               type="submit"
               className="bg-rose-500 w-full rounded-md py-3 text-white"
             >
-              Continue
+              {loading ? (
+                <TbFidgetSpinner className="m-auto animate-spin" size={24} />
+              ) : (
+                "Continue"
+              )}
             </button>
           </div>
         </form>
