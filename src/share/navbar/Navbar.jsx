@@ -1,15 +1,17 @@
 import { Link, NavLink } from "react-router-dom";
 import Container from "../../components/Container";
-import { FaHamburger, FaSearch } from "react-icons/fa";
 import { useState } from "react";
 import avatar from "../../assets/placeholder.jpg";
+import { AiOutlineMenu } from "react-icons/ai";
+import { FaSearch } from "react-icons/fa";
+import useAuth from "../../CustomHooks/useAuth";
 
 const Navbar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
-  const user = true;
+  const { user } = useAuth();
   // const handleMenuOpen =
   return (
-    <div className="h-16 max-w-[100%] py-4 shadow-sm z-10 opacity-70">
+    <div className="h-16 max-w-[100%] py-4 shadow-sm z-10 opacity-70  ">
       <Container>
         <nav className="flex justify-between items-center gap-3 ">
           <h2>logo</h2>
@@ -30,9 +32,9 @@ const Navbar = () => {
 
             {user ? (
               <>
-                <FaHamburger
+                <AiOutlineMenu
                   onClick={() => setMenuToggle(!menuToggle)}
-                ></FaHamburger>
+                ></AiOutlineMenu>
                 <img src={avatar} className="w-10 h-10 rounded-full" alt="" />
               </>
             ) : (
@@ -44,9 +46,9 @@ const Navbar = () => {
             )}
 
             {menuToggle && (
-              <div className="absolute top-12 right-20 ">
+              <div className="absolute top-14 right-20 shadow-md p-3 bg-slate-300">
                 <li className="list-none">
-                  <Link to={""}>Dashboard</Link>
+                  <Link to={"/dashboard"}>Dashboard</Link>
                 </li>
 
                 <li className="list-none">
